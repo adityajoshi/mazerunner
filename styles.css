@@ -6,6 +6,20 @@ body {
     margin: 0;
 }
 
+
+#buttonTable {
+    position: absolute;
+    margin-top: 500px;
+    margin-left: -250px;
+    /* margin-top: 20px; Adjusted margin for spacing */
+    /* position: relative; */
+    /* margin-left: 0; Center on small screens */
+}
+
+#buttonWrapper {
+    margin-top: 20px;
+}  
+
 @keyframes animate {
     0% {
         transform: translateY(0) rotate(0deg);
@@ -268,6 +282,16 @@ p {
         width: 15px;
         height: 15px;
     }
+
+    #buttonTable {
+        /* width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center; */
+        position: absolute;
+        margin-top: 300px;
+        margin-left: -150px;
+    }
 /* 
     #buttonTable {
         width: 100%;
@@ -342,10 +366,13 @@ p {
     }
 
     #buttonTable {
-        width: 100%;
+        /* width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: center; */
+        position: absolute;
+        margin-top: 300px;
+        margin-left: -150px;
     }
 /* 
     #buttonTable tr {
@@ -379,6 +406,21 @@ p {
         width: 50%;
         height: 35%;
     }
+
+    #buttonTable {
+        /* width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center; */
+        position: absolute;
+        margin-top: 300px;
+        margin-left: -150px;
+    }
+
+    #buttonWrapper {
+        margin-top: 20px;
+    }  
+    
 }
 
 @media screen and (max-width: 280px) {
@@ -400,17 +442,4 @@ p {
         padding: 5px 10px;
     }
 
-}
-
-#buttonTable {
-  position: absolute;
-  margin-top: 500px;
-  margin-left: -250px;
-  /* margin-top: 20px; Adjusted margin for spacing */
-  /* position: relative; */
-  /* margin-left: 0; Center on small screens */
-}
-
-#buttonWrapper {
-    margin-top: 20px;
 }
