@@ -414,11 +414,11 @@ p {
         align-items: center; */
         position: absolute;
         margin-top: 300px;
-        margin-left: -150px;
+        margin-left: -100px;
     }
 
     #buttonWrapper {
-        margin-top: 20px;
+        margin-top: 25px;
     }  
     
 }
