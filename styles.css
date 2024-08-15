@@ -165,7 +165,6 @@ p {
     position: absolute;
     margin-top: 60px;
     margin-left: -370px;
-    background-color: #ffffff;
     border: 5px solid #4E6227;
     border-radius: 10px;
 }
@@ -400,6 +399,7 @@ p {
     #mazeCanvas {
         width: 70%;
         margin-left: -130px;
+        
     }
 
     .msgbox {
