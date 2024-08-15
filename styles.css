@@ -269,6 +269,29 @@ p {
         height: 15px;
     }
 
+    #buttonTable {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #buttonTable tr {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    #buttonTable td {
+        width: auto;
+        margin: 5px;
+    }
+
+    #buttonWrapper {
+        margin-top: 10px;
+    }
+
 }
 
 @media screen and (max-width: 360px) {
@@ -317,6 +340,29 @@ p {
         width: 70%;
         margin-left: -165px;
     }
+
+    #buttonTable {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #buttonTable tr {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    #buttonTable td {
+        width: auto;
+        margin: 5px;
+    }
+
+    #buttonWrapper {
+        margin-top: 10px;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -353,10 +399,18 @@ p {
     .msgbox button {
         padding: 5px 10px;
     }
+
 }
 
 #buttonTable {
   position: absolute;
   margin-top: 500px;
   margin-left: -250px;
+  /* margin-top: 20px; Adjusted margin for spacing */
+  /* position: relative; */
+  /* margin-left: 0; Center on small screens */
+}
+
+#buttonWrapper {
+    margin-top: 20px;
 }
