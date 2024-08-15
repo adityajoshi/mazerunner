@@ -440,3 +440,24 @@ function solveMaze() {
 
 setup();
 draw();
+
+const element = document.getElementById('movableElement');
+
+let initialX = 0, initialY = 0, currentX = 0, currentY = 0;
+
+element.addEventListener('touchstart', startTouch, false);
+element.addEventListener('touchmove', moveTouch, false);
+
+function startTouch(e) {
+    initialX = e.touches[0].clientX - currentX;
+    initialY = e.touches[0].clientY - currentY;
+}
+
+function moveTouch(e) {
+    e.preventDefault(); // Prevent scrolling
+
+    currentX = e.touches[0].clientX - initialX;
+    currentY = e.touches[0].clientY - initialY;
+
+    element.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+}
