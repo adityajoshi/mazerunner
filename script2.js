@@ -31,6 +31,45 @@ const end = {
     color: 'blue',
 };
 
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+function handleTouchStart(event) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+}
+
+function handleTouchMove(event) {
+    touchEndX = event.touches[0].clientX;
+    touchEndY = event.touches[0].clientY;
+}
+
+function handleTouchEnd() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    if (absDeltaX > absDeltaY) {
+        if (deltaX > 0) {
+            movePlayer('ArrowRight', player1);
+        } else {
+            movePlayer('ArrowLeft', player1);
+        }
+    } else {
+        if (deltaY > 0) {
+            movePlayer('ArrowDown', player1);
+        } else {
+            movePlayer('ArrowUp', player1);
+        }
+    }
+    draw();
+}
+
+
 document.querySelector('.startbtn').
     addEventListener('click', function () {
     resetPlayerPos();
@@ -57,6 +96,9 @@ document.
 function addListener() {
     document.
     addEventListener('keydown', handleKeyPress);
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
 }
 
 document.getElementById('btnUp').
@@ -440,24 +482,3 @@ function solveMaze() {
 
 setup();
 draw();
-
-const element = document.getElementById('movableElement');
-
-let initialX = 0, initialY = 0, currentX = 0, currentY = 0;
-
-element.addEventListener('touchstart', startTouch, false);
-element.addEventListener('touchmove', moveTouch, false);
-
-function startTouch(e) {
-    initialX = e.touches[0].clientX - currentX;
-    initialY = e.touches[0].clientY - currentY;
-}
-
-function moveTouch(e) {
-    e.preventDefault(); // Prevent scrolling
-
-    currentX = e.touches[0].clientX - initialX;
-    currentY = e.touches[0].clientY - initialY;
-
-    element.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-}
