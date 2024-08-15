@@ -354,3 +354,9 @@ p {
         padding: 5px 10px;
     }
 }
+
+#buttonTable {
+  position: absolute;
+  margin-top: 500px;
+  margin-left: -250px;
+}
