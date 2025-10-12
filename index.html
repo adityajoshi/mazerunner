@@ -1,1011 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: 100%;
-            margin: 0;
-        }
-    
-    
-        #buttonTable {
-            position: absolute;
-            margin-top: 500px;
-            margin-left: -250px;
-            /* margin-top: 20px; Adjusted margin for spacing */
-            /* position: relative; */
-            /* margin-left: 0; Center on small screens */
-        }
-    
-        #buttonWrapper {
-            margin-top: 20px;
-        }
-    
-        @keyframes animate {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-                border-radius: 0;
-            }
-    
-            100% {
-                transform: translateY(-1000px) rotate(720deg);
-                opacity: 0;
-                border-radius: 50%;
-            }
-        }
-    
-        @keyframes animate {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-                border-radius: 0;
-            }
-    
-            100% {
-                transform: translateY(-1000px) rotate(720deg);
-                opacity: 0;
-                border-radius: 50%;
-            }
-        }
-    
-        .menubar {
-            z-index: 1;
-        }
-    
-        p {
-            margin: 0;
-            margin-left: 10px;
-            color: #40531a;
-            font-weight: 800;
-        }
-    
-        /* .background {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        margin: 0;
-        padding: 0;
-        background: #4fc968;
-        overflow: hidden;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maze Runner</title>
+  <style>
+    /* === Layout & Base === */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      font-family: "Lucida Sans", sans-serif;
+      background-color: #f3f3f3;
+      min-height: 100vh;
     }
-    
-    .background li {
-        position: absolute;
-        display: block;
-        list-style: none;
-        width: 20px;
-        height: 20px;
-        background: rgba(102, 82, 82, 0.2);
-        animation: animate 19s linear infinite;
+
+    .menubar {
+      text-align: center;
+      margin-top: 16px;
     }
-    
-    .background li:nth-child(0) {
-        left: 2%;
-        width: 120px;
-        height: 120px;
-        bottom: -120px;
-        animation-delay: 1s;
+
+    .menubar h2 {
+      color: #463234;
+      margin-bottom: 10px;
     }
-    
-    .background li:nth-child(1) {
-        left: 9%;
-        width: 195px;
-        height: 195px;
-        bottom: -195px;
-        animation-delay: 2s;
+
+    /* === Game Container === */
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
+      padding: 10px;
+      box-sizing: border-box;
     }
-    
-    .background li:nth-child(2) {
-        left: 69%;
-        width: 176px;
-        height: 176px;
-        bottom: -176px;
-        animation-delay: 7s;
+
+    #mazeCanvas {
+      width: 90vw;
+      max-width: 420px;
+      aspect-ratio: 1 / 1;
+      border: 5px solid #4e6227;
+      border-radius: 10px;
+      background-color: white;
+      touch-action: none;
     }
-    
-    .background li:nth-child(3) {
-        left: 16%;
-        width: 125px;
-        height: 125px;
-        bottom: -125px;
-        animation-delay: 1s;
+
+    /* === Controls === */
+    #controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 16px;
     }
-    
-    .background li:nth-child(4) {
-        left: 25%;
-        width: 115px;
-        height: 115px;
-        bottom: -115px;
-        animation-delay: 12s;
+
+    #buttonFlex {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
-    
-    .background li:nth-child(5) {
-        left: 26%;
-        width: 181px;
-        height: 181px;
-        bottom: -181px;
-        animation-delay: 23s;
+
+    .buttonRow {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
     }
-    
-    .background li:nth-child(6) {
-        left: 3%;
-        width: 180px;
-        height: 180px;
-        bottom: -180px;
-        animation-delay: 25s;
+
+    #buttonFlex button {
+      background-color: #db6334;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    
-    .background li:nth-child(7) {
-        left: 38%;
-        width: 136px;
-        height: 136px;
-        bottom: -136px;
-        animation-delay: 19s;
+
+    #buttonFlex button:hover {
+      background-color: #b92929;
     }
-    
-    .background li:nth-child(8) {
-        left: 1%;
-        width: 115px;
-        height: 115px;
-        bottom: -115px;
-        animation-delay: 31s;
+
+    /* === Start Button === */
+    .startbtn {
+      background-color: #af4c91;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
-    
-    .background li:nth-child(9) {
-        left: 55%;
-        width: 100px;
-        height: 100px;
-        bottom: -100px;
-        animation-delay: 6s;
-    } */
-    
-        #mazeCanvas {
-            position: absolute;
-            margin-top: 60px;
-            margin-left: -370px;
-            border: 5px solid #4E6227;
-            border-radius: 10px;
-        }
-    
-        .msgbox {
-            position: absolute;
-            min-width: 60vw;
-            max-width: 90vw;
-            min-height: 20vw;
-            max-height: 60vw;
-            border-radius: 4vw;
-            border: 0.8vw solid #FFD700;
-            background-color: #1E90FF;
-            z-index: 1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            visibility: hidden;
-            box-shadow: 0 0 4vw rgba(0, 0, 0, 0.5);
-            padding: 4vw 2vw;
-            font-size: 4vw;
-            color: #fff;
-            box-sizing: border-box;
-            word-break: break-word;
-        }
-    
-        .msgbox h1,
-        .msgbox h2 {
-            margin: 2vw 0;
-            font-size: 5vw;
-        }
-    
-        .msgbox button {
-            font-size: 4vw;
-            padding: 2vw 6vw;
-            border-radius: 2vw;
-        }
-    
-        @media (min-width: 600px) {
-            .msgbox {
-                min-width: 300px;
-                max-width: 400px;
-                min-height: 120px;
-                max-height: 300px;
-                font-size: 1.2em;
-                padding: 30px 20px;
-            }
-    
-            .msgbox h1,
-            .msgbox h2 {
-                font-size: 1.5em;
-            }
-    
-            .msgbox button {
-                font-size: 1em;
-                padding: 10px 30px;
-                border-radius: 8px;
-            }
-        }
-    
-        .startbtn {
-            background-color: #af4c91;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.5s ease;
-        }
-    
-        .startbtn:hover {
-            background-color: #64035f;
-        }
-    
-        #btnUp,
-        #btnDown,
-        #btnRight,
-        #btnLeft {
-            background-color: #db6334;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-    
-        #btnUp:hover,
-        #btnDown:hover,
-        #btnRight:hover,
-        #btnLeft:hover {
-            background-color: #b92929;
-        }
-    
-        @keyframes blinkBorder {
-    
-            0%,
-            100% {
-                box-shadow: 0 0 20px #c01826;
-            }
-    
-            50% {
-                box-shadow: none;
-            }
-        }
-    
-        .startbtn.blink {
-            animation: blinkBorder 2s linear infinite;
-        }
-    
-        @media screen and (max-width: 568px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -165px;
-    
-            }
-    
-            #arrowMessage {
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-    
-            .background li {
-                width: 15px;
-                height: 15px;
-            }
-    
-            #buttonTable {
-                /* width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center; */
-                position: absolute;
-                margin-top: 300px;
-                margin-left: -150px;
-            }
-    
-            /* 
-        #buttonTable {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    
-        #buttonTable tr {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-    
-        #buttonTable td {
-            width: auto;
-            margin: 5px;
-        }
-    
-        #buttonWrapper {
-            margin-top: 10px;
-        } */
-    
-        }
-    
-        @media screen and (max-width: 360px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -130px;
-    
-            }
-        }
-    
-        @media screen and (max-width: 328px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -120px;
-    
-            }
-        }
-    
-        @media screen and (max-width: 278px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -100px;
-    
-            }
-    
-        }
-    
-        @media screen and (max-width: 580px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -165px;
-            }
-    
-            #buttonTable {
-                /* width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center; */
-                position: absolute;
-                margin-top: 300px;
-                margin-left: -150px;
-            }
-    
-            /* 
-        #buttonTable tr {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-    
-        #buttonTable td {
-            width: auto;
-            margin: 5px;
-        } */
-    
-            #buttonWrapper {
-                margin-top: 5px;
-            }
-        }
-    
-        @media screen and (max-width: 412px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -130px;
-    
-            }
-    
-            .msgbox {
-                width: 50%;
-                height: 35%;
-            }
-    
-            #buttonTable {
-                /* width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center; */
-                position: absolute;
-                margin-top: 300px;
-                margin-left: -100px;
-            }
-    
-            #buttonWrapper {
-                margin-top: 25px;
-            }
-    
-        }
-    
-        @media screen and (max-width: 280px) {
-            body {
-                flex-direction: column;
-            }
-    
-            #mazeCanvas {
-                width: 70%;
-                margin-left: -100px;
-            }
-    
-            .msgbox {
-                width: 40%;
-                height: 38%;
-            }
-    
-            .msgbox button {
-                padding: 5px 10px;
-            }
-    
-        }
-    </style>
-    <title>Maze Runner</title>
+
+    .startbtn:hover {
+      background-color: #64035f;
+    }
+
+    /* === Message Box === */
+    .msgbox {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 70vw;
+      background-color: #1e90ff;
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.2rem;
+      visibility: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+    }
+
+    /* === Mobile Adjustments (Samsung A33 size) === */
+    @media (max-width: 480px) {
+      #buttonFlex button {
+        width: 54px;
+        height: 54px;
+        font-size: 1.3rem;
+      }
+
+      .menubar h2 {
+        font-size: 1.3rem;
+      }
+
+      .startbtn {
+        font-size: 1rem;
+        padding: 8px 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="menubar">
+    <h2><u>Maze Runner</u></h2>
+    <button class="startbtn">Start</button>
+  </div>
 
-    <div class="menubar">
-        <h2 style="color:rgb(70, 50, 52);
-            font-family: 'Lucida Sans', 
-                         'Lucida Sans Regular', 
-                         'Lucida Grande', 
-                         'Lucida Sans Unicode', 
-                         Geneva, Verdana, sans-serif;">
-            <u>Maze Runner</u>
-        </h2>
-        <button class="startbtn">Start</button>
-    </div>
-    <!-- <ul class="background">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul> -->
-    <div class="content">
-        <div class="msgbox"></div>
-        <canvas id="mazeCanvas" height="400px" width="400px">
-        </canvas>
-        <div id="buttonWrapper">
-            <table id="buttonTable">
-                <tr>
-                    <td></td>
-                    <td><button id="btnUp">Up</button></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><button id="btnLeft">Left</button></td>
-                    <td><button id="btnDown">Down</button></td>
-                    <td><button id="btnRight">Right</button></td>
-                </tr>
-            </table>
+  <main class="game-container">
+    <canvas id="mazeCanvas"></canvas>
+
+    <section id="controls">
+      <div id="buttonFlex">
+        <button id="btnUp" aria-label="Move Up">▲</button>
+        <div class="buttonRow">
+          <button id="btnLeft" aria-label="Move Left">◀</button>
+          <button id="btnDown" aria-label="Move Down">▼</button>
+          <button id="btnRight" aria-label="Move Right">▶</button>
         </div>
-    </div>
+      </div>
+    </section>
+  </main>
 
+  <div class="msgbox"></div>
 
-    <!-- <script src="script2.js"></script> -->
-    <script type="text/javascript">
-            const canvas =
-                document.getElementById('mazeCanvas');
-            const pen =
-                canvas.getContext('2d');
+  <script>
+    const canvas = document.getElementById("mazeCanvas");
+    const pen = canvas.getContext("2d");
 
-            const width = canvas.width;
-            const height = canvas.height;
-            let cellSize = 40;
+    // Responsive maze size
+    function resizeCanvas() {
+      const size = Math.min(window.innerWidth * 0.9, 420);
+      canvas.width = size;
+      canvas.height = size;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-            const playerRadius = cellSize / 2 - 5;
-            const endRadius = cellSize / 2 - 5;
+    const playerColor = "red";
+    const endColor = "blue";
+    let cellSize, cols, rows;
+    let trail = [];
+    let cells = [];
+    let points = 0;
 
-            let trail = [];
-            let generatedMaze;
-            let solutionPath;
+    const player1 = { x: 0, y: 0 };
+    const end = {};
 
-            let points = 0;
-            const cols =
-                Math.floor(width / cellSize);
-            const rows =
-                Math.floor(height / cellSize);
-            const player1 = {
-                x: 0,
-                y: 0,
-                color: 'red',
-            };
+    function setup() {
+      cellSize = canvas.width / 10;
+      cols = Math.floor(canvas.width / cellSize);
+      rows = Math.floor(canvas.height / cellSize);
+      end.x = cols - 1;
+      end.y = rows - 1;
 
-            const end = {
-                x: cols - 1,
-                y: rows - 1,
-                color: 'blue',
-            };
-
-            let touchStartX = 0;
-            let touchStartY = 0;
-            let touchEndX = 0;
-            let touchEndY = 0;
-
-            function handleTouchStart(event) {
-                touchStartX = event.touches[0].clientX;
-                touchStartY = event.touches[0].clientY;
-            }
-
-            function handleTouchMove(event) {
-                touchEndX = event.touches[0].clientX;
-                touchEndY = event.touches[0].clientY;
-            }
-
-            function handleTouchEnd() {
-                const deltaX = touchEndX - touchStartX;
-                const deltaY = touchEndY - touchStartY;
-
-            const absDeltaX = Math.abs(deltaX);
-            const absDeltaY = Math.abs(deltaY);
-
-            if (absDeltaX > absDeltaY) {
-                if (deltaX > 0) {
-                    movePlayer('ArrowRight', player1);
-                } else {
-                    movePlayer('ArrowLeft', player1);
-                }
-            } else {
-                if (deltaY > 0) {
-                    movePlayer('ArrowDown', player1);
-                } else {
-                    movePlayer('ArrowUp', player1);
-                }
-            }
-            draw();
+      cells = [];
+      for (let x = 0; x < cols; x++) {
+        cells[x] = [];
+        for (let y = 0; y < rows; y++) {
+          cells[x][y] = new Cell(x, y);
         }
+      }
+      genMaze(0, 0);
+      draw();
+    }
 
+    class Cell {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.visited = false;
+        this.walls = { top: true, right: true, bottom: true, left: true };
+      }
 
-            document.querySelector('.startbtn').
-                addEventListener('click', function () {
-                    resetPlayerPos();
-                    clearScreen();
-                    setup();
-                    draw();
-                    addListener();
-                    displayHidden();
-                });
+      show() {
+        const x = this.x * cellSize;
+        const y = this.y * cellSize;
+        pen.beginPath();
+        pen.strokeStyle = "#4e6227";
+        pen.lineWidth = 3;
+        if (this.walls.top) pen.strokeRect(x, y, cellSize, 0);
+        if (this.walls.right) pen.strokeRect(x + cellSize, y, 0, cellSize);
+        if (this.walls.bottom) pen.strokeRect(x, y + cellSize, cellSize, 0);
+        if (this.walls.left) pen.strokeRect(x, y, 0, cellSize);
+      }
+    }
 
-            document.
-                addEventListener('DOMContentLoaded',
-                    function () {
-                        const startButton =
-                            document.querySelector('.startbtn');
-                        function stopBlinking() {
-                            startButton.classList.remove("blink");
-                        }
-                        startButton.classList.add("blink");
-                        startButton.
-                            addEventListener("click", stopBlinking);
-                    });
+    function randomize(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
 
-            function addListener() {
-                document.
-                    addEventListener('keydown', handleKeyPress);
-                document.addEventListener('touchstart', handleTouchStart);
-                document.addEventListener('touchmove', handleTouchMove);
-                document.addEventListener('touchend', handleTouchEnd);
-            }
+    function genMaze(x, y) {
+      const cell = cells[x][y];
+      cell.visited = true;
+      const dirs = randomize(["top", "right", "bottom", "left"]);
 
-            document.getElementById('btnUp').
-                addEventListener('click', function () {
-                    movePlayer('ArrowUp', player1);
-                    draw();
-                });
-
-            document.getElementById('btnDown').
-                addEventListener('click', function () {
-                    movePlayer('ArrowDown', player1);
-                    draw();
-                });
-
-            document.getElementById('btnLeft').
-                addEventListener('click', function () {
-                    movePlayer('ArrowLeft', player1);
-                    draw();
-                });
-
-            document.getElementById('btnRight').
-                addEventListener('click', function () {
-                    movePlayer('ArrowRight', player1);
-                    draw();
-                });
-
-            function handleKeyPress(event) {
-                const key = event.key;
-                movePlayer(key, player1);
-                draw();
-            }
-
-            function showRestartMessage() {
-                const messageBox =
-                    document.getElementsByClassName('msgbox')[0];
-                messageBox.innerHTML = "Invalid Move. Press restart.";
-                messageBox.innerHTML +=
-                `<br>
-    <button class='restartbtn' 
-            style='margin-top:70px;' 
-            onclick='resetState()'>
-            Restart
-    </button>`;
-            messageBox.style.visibility = "visible";
-            messageBox.style.fontSize = "1.7em"
-            messageBox.style.color = "white"
-            messageBox.style.fontFamily =
-                `'Lucida Sans', 
-    'Lucida Sans Regular', 
-    'Lucida Grande', 
-    'Lucida Sans Unicode', 
-    Geneva, Verdana, sans-serif`
-
-            }
-            function resetState() {
-                const messageBox =
-                    document.getElementsByClassName('msgbox')[0];
-                messageBox.style.visibility = "hidden";
-            }
-            function movePlayer(key, player) {
-                let validMove = false;
-
-            switch (key) {
-                case 'ArrowUp':
-                    if (player.y > 0 &&
-                        cells[player.x][player.y].
-                            walls.top === false) {
-                        player.y--;
-                        points++;
-                        validMove = true;
-                    }
-                    break;
-                case 'ArrowDown':
-                    if (player.y < rows - 1 &&
-                        cells[player.x][player.y].
-                            walls.bottom === false) {
-                        player.y++;
-                        points++;
-                        validMove = true;
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if (player.x > 0 &&
-                        cells[player.x][player.y].
-                            walls.left === false) {
-                        player.x--;
-                        points++;
-                        validMove = true;
-                    }
-                    break;
-                case 'ArrowRight':
-                    if (player.x < cols - 1 &&
-                        cells[player.x][player.y].
-                            walls.right === false) {
-                        player.x++;
-                        points++;
-                        validMove = true;
-                    }
-                    break;
-            }
-            if (!validMove) {
-                return;
-            }
-
-            const isTwice = trail.some(
-                cell => cell.x === player.x &&
-                    cell.y === player.y);
-            if (isTwice) {
-                showRestartMessage();
-                resetPlayerPos();
-            }
-
-            if (player.x == cols - 1 && player.y == rows - 1) {
-                document.
-                    removeEventListener('keydown', handleKeyPress);
-                const messageBox =
-                    document.getElementsByClassName('msgbox')[0];
-
-                messageBox.innerHTML = "<h1>You Won!</h1>"
-                messageBox.innerHTML += "<h2 id='moves'>Moves</h2>"
-                messageBox.innerHTML +=
-                    `<button id='done' onclick='location.reload()'>
-            Play Again
-        </button>`
-                document.getElementById('moves').innerHTML = "Moves:" + points;
-                messageBox.style.fontSize = "1em"
-                messageBox.style.color = "black"
-                messageBox.style.fontFamily =
-                    `'Lucida Sans', 
-        'Lucida Sans Regular', 
-        'Lucida Grande', 
-        'Lucida Sans Unicode', 
-        Geneva, Verdana, sans-serif`
-                messageBox.style.visibility = "visible";
-            }
+      for (const dir of dirs) {
+        const dx = { top: 0, right: 1, bottom: 0, left: -1 }[dir];
+        const dy = { top: -1, right: 0, bottom: 1, left: 0 }[dir];
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+          const ncell = cells[nx][ny];
+          if (!ncell.visited) {
+            cell.walls[dir] = false;
+            ncell.walls[
+              { top: "bottom", right: "left", bottom: "top", left: "right" }[
+                dir
+              ]
+            ] = false;
+            genMaze(nx, ny);
+          }
         }
+      }
+    }
 
-            function clearScreen() {
-                pen.canvas.width = pen.canvas.width;
-            }
+    function clearScreen() {
+      pen.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
-            function displayHidden() {
-                document.getElementsByClassName('msgbox')[0].
-                    style.visibility = "hidden";
-            }
-
-            const cells = [];
-
-            for (let x = 0; x < rows; x++) {
-                cells[x] = [];
-                for (let y = 0; y < cols; y++) {
-                    cells[x][y] = null;
-                }
-            }
-
-            class CellA {
-                constructor(x, y) {
-                    this.x = x;
-                    this.y = y;
-                    this.visited = false;
-                    this.walls = {
-                        top: true,
-                        right: true,
-                        bottom: true,
-                        left: true,
-                    };
-                }
-
-            show() {
-                const x = this.x * cellSize;
-                const y = this.y * cellSize;
-
-                pen.beginPath();
-
-                if (this.walls.top) {
-                    pen.moveTo(x, y);
-                    pen.lineTo(x + cellSize, y);
-                }
-
-                if (this.walls.right) {
-                    pen.moveTo(x + cellSize, y);
-                    pen.lineTo(x + cellSize, y + cellSize);
-                }
-
-                if (this.walls.bottom) {
-                    pen.moveTo(x + cellSize, y + cellSize);
-                    pen.lineTo(x, y + cellSize);
-                }
-
-                if (this.walls.left) {
-                    pen.moveTo(x, y + cellSize);
-                    pen.lineTo(x, y);
-                }
-                pen.strokeStyle = 'green';
-                pen.lineWidth = 5;
-                pen.lineCap = "round";
-                pen.stroke();
-            }
+    function draw() {
+      clearScreen();
+      for (let x = 0; x < cols; x++) {
+        for (let y = 0; y < rows; y++) {
+          cells[x][y].show();
         }
+      }
+      drawEnd();
+      drawPlayer();
+    }
 
-            function setup() {
-                // Initialize the cells
-                for (let x = 0; x < rows; x++) {
-                    for (let y = 0; y < cols; y++) {
-                        cells[x][y] = new CellA(x, y);
-                    }
-                }
-                genMaze(0, 0);
-            }
+    function drawPlayer() {
+      const x = player1.x * cellSize + cellSize / 2;
+      const y = player1.y * cellSize + cellSize / 2;
+      pen.beginPath();
+      pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
+      pen.fillStyle = playerColor;
+      pen.fill();
+    }
 
-            function genMaze(x, y) {
-                const presentCell = cells[x][y];
-                presentCell.visited = true;
+    function drawEnd() {
+      const x = end.x * cellSize + cellSize / 2;
+      const y = end.y * cellSize + cellSize / 2;
+      pen.beginPath();
+      pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
+      pen.fillStyle = endColor;
+      pen.fill();
+    }
 
-            const directions =
-                randomize(['top', 'right', 'bottom', 'left']);
+    function movePlayer(dir) {
+      const cell = cells[player1.x][player1.y];
+      switch (dir) {
+        case "ArrowUp":
+          if (player1.y > 0 && !cell.walls.top) player1.y--;
+          break;
+        case "ArrowDown":
+          if (player1.y < rows - 1 && !cell.walls.bottom) player1.y++;
+          break;
+        case "ArrowLeft":
+          if (player1.x > 0 && !cell.walls.left) player1.x--;
+          break;
+        case "ArrowRight":
+          if (player1.x < cols - 1 && !cell.walls.right) player1.x++;
+          break;
+      }
+      checkWin();
+      draw();
+    }
 
-            for (const direction of directions) {
-                const dx =
-                    { top: 0, right: 1, bottom: 0, left: -1 }[direction];
-                const dy =
-                    { top: -1, right: 0, bottom: 1, left: 0 }[direction];
+    function checkWin() {
+      if (player1.x === end.x && player1.y === end.y) {
+        const msg = document.querySelector(".msgbox");
+        msg.innerHTML = "<h2>You Won!</h2><button onclick='restart()'>Play Again</button>";
+        msg.style.visibility = "visible";
+      }
+    }
 
-                const newX = x + dx;
-                const newY = y + dy;
-                // if the coordinates are inbound
-                if (newX >= 0 && newX < cols
-                    && newY >= 0 && newY < rows) {
-                    const neighbour = cells[newX][newY];
+    function restart() {
+      document.querySelector(".msgbox").style.visibility = "hidden";
+      player1.x = 0;
+      player1.y = 0;
+      setup();
+    }
 
-                    // removing walls
+    document.querySelector(".startbtn").addEventListener("click", setup);
+    document.addEventListener("keydown", (e) => movePlayer(e.key));
 
-                    if (!neighbour.visited) {
-                        presentCell.walls[direction] = false;
-                        neighbour.walls[{
-                            top: 'bottom',
-                            right: 'left',
-                            bottom: 'top',
-                            left: 'right',
-                        }[direction]] = false;
-                        genMaze(newX, newY);
-                    }
-                }
-            }
-            generatedMaze =
-                cells.map(row => row.map(
-                    cell => ({ ...cell })));
-            solutionPath = solveMaze();
-        }
+    document.getElementById("btnUp").addEventListener("click", () => movePlayer("ArrowUp"));
+    document.getElementById("btnDown").addEventListener("click", () => movePlayer("ArrowDown"));
+    document.getElementById("btnLeft").addEventListener("click", () => movePlayer("ArrowLeft"));
+    document.getElementById("btnRight").addEventListener("click", () => movePlayer("ArrowRight"));
 
-
-            function resetPlayerPos() {
-                player1.x = 0;
-                player1.y = 0;
-                points = 0;
-                trail = [];
-            }
-
-            function draw() {
-                clearScreen();
-                genMaze(player1.x, player1.y);
-
-            for (let x = 0; x < cols; x++) {
-                for (let y = 0; y < rows; y++) {
-                    cells[x][y].show();
-                }
-            }
-
-            trail.push({ x: player1.x, y: player1.y });
-            pen.beginPath();
-            for (let i = 0; i < trail.length; i++) {
-                const trailX =
-                    trail[i].x * cellSize + cellSize / 2;
-                const trailY =
-                    trail[i].y * cellSize + cellSize / 2;
-
-                if (i === 0) {
-                    pen.moveTo(trailX, trailY);
-                } else {
-                    pen.lineTo(trailX, trailY);
-                }
-            }
-            pen.lineCap = "round";
-            pen.strokeStyle = "white";
-            pen.lineWidth = 4;
-            pen.stroke();
-
-            drawPlayer(player1);
-            drawEnd();
-
-
-            pen.strokeStyle = 'green';
-            pen.lineWidth = 6;
-            pen.lineCap = "round";
-            pen.stroke();
-
-            const isPartOfSolution =
-                solutionPath.some(cell =>
-                    cell.x === player1.x &&
-                    cell.y === player1.y);
-
-            if (!isPartOfSolution) {
-                showRestartMessage();
-                player1.x = 0;
-                player1.y = 0;
-                points = 0;
-                trail = [];
-                draw();
-            }
-        }
-
-            function drawPlayer(player) {
-                const x = player.x * cellSize + cellSize / 2;
-                const y = player.y * cellSize + cellSize / 2;
-
-            pen.beginPath();
-            pen.arc(x, y, playerRadius, 0, 2 * Math.PI);
-            pen.fillStyle = player.color;
-            pen.fill();
-        }
-
-            function drawEnd() {
-                const x = (end.x + 0.5) * cellSize;
-                const y = (end.y + 0.5) * cellSize;
-
-            pen.beginPath();
-            pen.arc(x, y, endRadius, 0, 2 * Math.PI);
-            pen.fillStyle = end.color;
-            pen.fill();
-
-        }
-
-            function randomize(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-                return array;
-            }
-            function solveMaze() {
-                const visited =
-                    Array.from({ length: rows },
-                        () => Array(cols).fill(false));
-                const path = [];
-
-            function dfs(x, y) {
-                if (x < 0 || x >= cols || y < 0 ||
-                    y >= rows || visited[y][x]) {
-                    return false;
-                }
-
-                visited[y][x] = true;
-                path.push({ x, y });
-
-                if (x === cols - 1 && y === rows - 1) {
-                    return true;
-                }
-
-                const cell = generatedMaze[x][y];
-
-                if (!cell.walls.top && dfs(x, y - 1)) {
-                    return true;
-                }
-                if (!cell.walls.right && dfs(x + 1, y)) {
-                    return true;
-                }
-                if (!cell.walls.bottom && dfs(x, y + 1)) {
-                    return true;
-                }
-                if (!cell.walls.left && dfs(x - 1, y)) {
-                    return true;
-                }
-
-                path.pop();
-                return false;
-            }
-
-            dfs(0, 0);
-            return path;
-        }
-
-            setup();
-            draw();
-
-    </script>
+    setup();
+  </script>
 </body>
-
 </html>
