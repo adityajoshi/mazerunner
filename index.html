@@ -1,338 +1,383 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maze Runner</title>
-  <style>
-    /* === Layout & Base === */
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0;
-      font-family: "Lucida Sans", sans-serif;
-      background-color: #f3f3f3;
-      min-height: 100vh;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maze Runner</title>
+    <style>
+        /* === Layout & Base === */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            font-family: "Lucida Sans", sans-serif;
+            background-color: #f3f3f3;
+            min-height: 100vh;
+        }
 
-    .menubar {
-      text-align: center;
-      margin-top: 16px;
-    }
+        .menubar {
+            text-align: center;
+            margin-top: 16px;
+        }
 
-    .menubar h2 {
-      color: #463234;
-      margin-bottom: 10px;
-    }
+        .menubar h2 {
+            color: #463234;
+            margin-bottom: 10px;
+        }
 
-    /* === Game Container === */
-    .game-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 420px;
-      padding: 10px;
-      box-sizing: border-box;
-    }
+        /* === Game Container === */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 420px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
-    #mazeCanvas {
-      width: 90vw;
-      max-width: 420px;
-      aspect-ratio: 1 / 1;
-      border: 5px solid #4e6227;
-      border-radius: 10px;
-      background-color: white;
-      touch-action: none;
-    }
+        #mazeCanvas {
+            width: 90vw;
+            max-width: 420px;
+            aspect-ratio: 1 / 1;
+            border: 5px solid #4e6227;
+            border-radius: 10px;
+            background-color: white;
+            touch-action: none;
+        }
 
-    /* === Controls === */
-    #controls {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 16px;
-    }
+        /* === Controls === */
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 16px;
+        }
 
-    #buttonFlex {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+        #buttonFlex {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .buttonRow {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-    }
+        .buttonRow {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
 
-    #buttonFlex button {
-      background-color: #db6334;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 1.6rem;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
+        #buttonFlex button {
+            background-color: #db6334;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    #buttonFlex button:hover {
-      background-color: #b92929;
-    }
+        #buttonFlex button:hover {
+            background-color: #b92929;
+        }
 
-    /* === Start Button === */
-    .startbtn {
-      background-color: #af4c91;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+        /* === Start Button === */
+        .startbtn {
+            background-color: #af4c91;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-    .startbtn:hover {
-      background-color: #64035f;
-    }
+        #difficulty {
+            margin-left: 10px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #888;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: white;
+        }
 
-    /* === Message Box === */
-    .msgbox {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 70vw;
-      background-color: #1e90ff;
-      color: white;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.2rem;
-      visibility: hidden;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-      z-index: 10;
-    }
+        @media (max-width: 480px) {
+            #difficulty {
+                font-size: 0.9rem;
+                padding: 5px 8px;
+            }
+        }
 
-    /* === Mobile Adjustments (Samsung A33 size) === */
-    @media (max-width: 480px) {
-      #buttonFlex button {
-        width: 54px;
-        height: 54px;
-        font-size: 1.3rem;
-      }
+        .startbtn:hover {
+            background-color: #64035f;
+        }
 
-      .menubar h2 {
-        font-size: 1.3rem;
-      }
+        /* === Message Box === */
+        .msgbox {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 70vw;
+            background-color: #1e90ff;
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            visibility: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
 
-      .startbtn {
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
-    }
-  </style>
+        /* === Mobile Adjustments (Samsung A33 size) === */
+        @media (max-width: 480px) {
+            #buttonFlex button {
+                width: 54px;
+                height: 54px;
+                font-size: 1.3rem;
+            }
+
+            .menubar h2 {
+                font-size: 1.3rem;
+            }
+
+            .startbtn {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div class="menubar">
-    <h2><u>Maze Runner</u></h2>
-    <button class="startbtn">Start</button>
-  </div>
+    <div class="menubar">
+        <h2><u>Maze Runner</u></h2>
+        <button class="startbtn">Start</button>
+        <select id="difficulty">
+            <option value="easy">Easy (10x10)</option>
+            <option value="medium">Medium (20x20)</option>
+            <option value="hard">Hard (30x30)</option>
+        </select>
+    </div>
 
-  <main class="game-container">
-    <canvas id="mazeCanvas"></canvas>
+    <main class="game-container">
+        <canvas id="mazeCanvas"></canvas>
 
-    <section id="controls">
-      <div id="buttonFlex">
-        <button id="btnUp" aria-label="Move Up">▲</button>
-        <div class="buttonRow">
-          <button id="btnLeft" aria-label="Move Left">◀</button>
-          <button id="btnDown" aria-label="Move Down">▼</button>
-          <button id="btnRight" aria-label="Move Right">▶</button>
-        </div>
-      </div>
-    </section>
-  </main>
+        <section id="controls">
+            <div id="buttonFlex">
+                <button id="btnUp" aria-label="Move Up">▲</button>
+                <div class="buttonRow">
+                    <button id="btnLeft" aria-label="Move Left">◀</button>
+                    <button id="btnDown" aria-label="Move Down">▼</button>
+                    <button id="btnRight" aria-label="Move Right">▶</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <div class="msgbox"></div>
+    <div class="msgbox"></div>
 
-  <script>
-    const canvas = document.getElementById("mazeCanvas");
-    const pen = canvas.getContext("2d");
+    <script>
+        const canvas = document.getElementById("mazeCanvas");
+        const pen = canvas.getContext("2d");
 
-    // Responsive maze size
-    function resizeCanvas() {
-      const size = Math.min(window.innerWidth * 0.9, 420);
-      canvas.width = size;
-      canvas.height = size;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    const playerColor = "red";
-    const endColor = "blue";
-    let cellSize, cols, rows;
-    let trail = [];
-    let cells = [];
-    let points = 0;
-
-    const player1 = { x: 0, y: 0 };
-    const end = {};
-
-    function setup() {
-      cellSize = canvas.width / 10;
-      cols = Math.floor(canvas.width / cellSize);
-      rows = Math.floor(canvas.height / cellSize);
-      end.x = cols - 1;
-      end.y = rows - 1;
-
-      cells = [];
-      for (let x = 0; x < cols; x++) {
-        cells[x] = [];
-        for (let y = 0; y < rows; y++) {
-          cells[x][y] = new Cell(x, y);
+        // Responsive maze size
+        function resizeCanvas() {
+            const size = Math.min(window.innerWidth * 0.9, 420);
+            canvas.width = size;
+            canvas.height = size;
         }
-      }
-      genMaze(0, 0);
-      draw();
-    }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
 
-    class Cell {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.visited = false;
-        this.walls = { top: true, right: true, bottom: true, left: true };
-      }
+        const playerColor = "red";
+        const endColor = "blue";
+        let cellSize, cols, rows;
+        let trail = [];
+        let cells = [];
+        let points = 0;
 
-      show() {
-        const x = this.x * cellSize;
-        const y = this.y * cellSize;
-        pen.beginPath();
-        pen.strokeStyle = "#4e6227";
-        pen.lineWidth = 3;
-        if (this.walls.top) pen.strokeRect(x, y, cellSize, 0);
-        if (this.walls.right) pen.strokeRect(x + cellSize, y, 0, cellSize);
-        if (this.walls.bottom) pen.strokeRect(x, y + cellSize, cellSize, 0);
-        if (this.walls.left) pen.strokeRect(x, y, 0, cellSize);
-      }
-    }
+        const player1 = { x: 0, y: 0 };
+        const end = {};
 
-    function randomize(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
+        function setup() {
+            const difficulty = document.getElementById("difficulty").value;
+            let gridSize;
 
-    function genMaze(x, y) {
-      const cell = cells[x][y];
-      cell.visited = true;
-      const dirs = randomize(["top", "right", "bottom", "left"]);
+            switch (difficulty) {
+                case "easy":
+                    gridSize = 10;
+                    break;
+                case "medium":
+                    gridSize = 20;
+                    break;
+                case "hard":
+                    gridSize = 30;
+                    break;
+                default:
+                    gridSize = 10;
+            }
 
-      for (const dir of dirs) {
-        const dx = { top: 0, right: 1, bottom: 0, left: -1 }[dir];
-        const dy = { top: -1, right: 0, bottom: 1, left: 0 }[dir];
-        const nx = x + dx;
-        const ny = y + dy;
-        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
-          const ncell = cells[nx][ny];
-          if (!ncell.visited) {
-            cell.walls[dir] = false;
-            ncell.walls[
-              { top: "bottom", right: "left", bottom: "top", left: "right" }[
-                dir
-              ]
-            ] = false;
-            genMaze(nx, ny);
-          }
+            cellSize = canvas.width / gridSize;
+            cols = Math.floor(canvas.width / cellSize);
+            rows = Math.floor(canvas.height / cellSize);
+            end.x = cols - 1;
+            end.y = rows - 1;
+
+            cells = [];
+            for (let x = 0; x < cols; x++) {
+                cells[x] = [];
+                for (let y = 0; y < rows; y++) {
+                    cells[x][y] = new Cell(x, y);
+                }
+            }
+
+            genMaze(0, 0);
+            player1.x = 0;
+            player1.y = 0;
+            draw();
         }
-      }
-    }
 
-    function clearScreen() {
-      pen.clearRect(0, 0, canvas.width, canvas.height);
-    }
 
-    function draw() {
-      clearScreen();
-      for (let x = 0; x < cols; x++) {
-        for (let y = 0; y < rows; y++) {
-          cells[x][y].show();
+        class Cell {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.visited = false;
+                this.walls = { top: true, right: true, bottom: true, left: true };
+            }
+
+            show() {
+                const x = this.x * cellSize;
+                const y = this.y * cellSize;
+                pen.beginPath();
+                pen.strokeStyle = "#4e6227";
+                pen.lineWidth = 3;
+                if (this.walls.top) pen.strokeRect(x, y, cellSize, 0);
+                if (this.walls.right) pen.strokeRect(x + cellSize, y, 0, cellSize);
+                if (this.walls.bottom) pen.strokeRect(x, y + cellSize, cellSize, 0);
+                if (this.walls.left) pen.strokeRect(x, y, 0, cellSize);
+            }
         }
-      }
-      drawEnd();
-      drawPlayer();
-    }
 
-    function drawPlayer() {
-      const x = player1.x * cellSize + cellSize / 2;
-      const y = player1.y * cellSize + cellSize / 2;
-      pen.beginPath();
-      pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
-      pen.fillStyle = playerColor;
-      pen.fill();
-    }
+        function randomize(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
-    function drawEnd() {
-      const x = end.x * cellSize + cellSize / 2;
-      const y = end.y * cellSize + cellSize / 2;
-      pen.beginPath();
-      pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
-      pen.fillStyle = endColor;
-      pen.fill();
-    }
+        function genMaze(x, y) {
+            const cell = cells[x][y];
+            cell.visited = true;
+            const dirs = randomize(["top", "right", "bottom", "left"]);
 
-    function movePlayer(dir) {
-      const cell = cells[player1.x][player1.y];
-      switch (dir) {
-        case "ArrowUp":
-          if (player1.y > 0 && !cell.walls.top) player1.y--;
-          break;
-        case "ArrowDown":
-          if (player1.y < rows - 1 && !cell.walls.bottom) player1.y++;
-          break;
-        case "ArrowLeft":
-          if (player1.x > 0 && !cell.walls.left) player1.x--;
-          break;
-        case "ArrowRight":
-          if (player1.x < cols - 1 && !cell.walls.right) player1.x++;
-          break;
-      }
-      checkWin();
-      draw();
-    }
+            for (const dir of dirs) {
+                const dx = { top: 0, right: 1, bottom: 0, left: -1 }[dir];
+                const dy = { top: -1, right: 0, bottom: 1, left: 0 }[dir];
+                const nx = x + dx;
+                const ny = y + dy;
+                if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+                    const ncell = cells[nx][ny];
+                    if (!ncell.visited) {
+                        cell.walls[dir] = false;
+                        ncell.walls[
+                            { top: "bottom", right: "left", bottom: "top", left: "right" }[
+                            dir
+                            ]
+                        ] = false;
+                        genMaze(nx, ny);
+                    }
+                }
+            }
+        }
 
-    function checkWin() {
-      if (player1.x === end.x && player1.y === end.y) {
-        const msg = document.querySelector(".msgbox");
-        msg.innerHTML = "<h2>You Won!</h2><button onclick='restart()'>Play Again</button>";
-        msg.style.visibility = "visible";
-      }
-    }
+        function clearScreen() {
+            pen.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
-    function restart() {
-      document.querySelector(".msgbox").style.visibility = "hidden";
-      player1.x = 0;
-      player1.y = 0;
-      setup();
-    }
+        function draw() {
+            clearScreen();
+            for (let x = 0; x < cols; x++) {
+                for (let y = 0; y < rows; y++) {
+                    cells[x][y].show();
+                }
+            }
+            drawEnd();
+            drawPlayer();
+        }
 
-    document.querySelector(".startbtn").addEventListener("click", setup);
-    document.addEventListener("keydown", (e) => movePlayer(e.key));
+        function drawPlayer() {
+            const x = player1.x * cellSize + cellSize / 2;
+            const y = player1.y * cellSize + cellSize / 2;
+            pen.beginPath();
+            pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
+            pen.fillStyle = playerColor;
+            pen.fill();
+        }
 
-    document.getElementById("btnUp").addEventListener("click", () => movePlayer("ArrowUp"));
-    document.getElementById("btnDown").addEventListener("click", () => movePlayer("ArrowDown"));
-    document.getElementById("btnLeft").addEventListener("click", () => movePlayer("ArrowLeft"));
-    document.getElementById("btnRight").addEventListener("click", () => movePlayer("ArrowRight"));
+        function drawEnd() {
+            const x = end.x * cellSize + cellSize / 2;
+            const y = end.y * cellSize + cellSize / 2;
+            pen.beginPath();
+            pen.arc(x, y, cellSize / 4, 0, 2 * Math.PI);
+            pen.fillStyle = endColor;
+            pen.fill();
+        }
 
-    setup();
-  </script>
+        function movePlayer(dir) {
+            const cell = cells[player1.x][player1.y];
+            switch (dir) {
+                case "ArrowUp":
+                    if (player1.y > 0 && !cell.walls.top) player1.y--;
+                    break;
+                case "ArrowDown":
+                    if (player1.y < rows - 1 && !cell.walls.bottom) player1.y++;
+                    break;
+                case "ArrowLeft":
+                    if (player1.x > 0 && !cell.walls.left) player1.x--;
+                    break;
+                case "ArrowRight":
+                    if (player1.x < cols - 1 && !cell.walls.right) player1.x++;
+                    break;
+            }
+            checkWin();
+            draw();
+        }
+
+        function checkWin() {
+            if (player1.x === end.x && player1.y === end.y) {
+                const msg = document.querySelector(".msgbox");
+                msg.innerHTML = "<h2>You Won!</h2><button onclick='restart()'>Play Again</button>";
+                msg.style.visibility = "visible";
+            }
+        }
+
+        function restart() {
+            document.querySelector(".msgbox").style.visibility = "hidden";
+            player1.x = 0;
+            player1.y = 0;
+            setup();
+        }
+
+        document.querySelector(".startbtn").addEventListener("click", setup);
+        document.addEventListener("keydown", (e) => movePlayer(e.key));
+
+        document.getElementById("btnUp").addEventListener("click", () => movePlayer("ArrowUp"));
+        document.getElementById("btnDown").addEventListener("click", () => movePlayer("ArrowDown"));
+        document.getElementById("btnLeft").addEventListener("click", () => movePlayer("ArrowLeft"));
+        document.getElementById("btnRight").addEventListener("click", () => movePlayer("ArrowRight"));
+
+        setup();
+    </script>
 </body>
+
 </html>
