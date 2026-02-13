@@ -1,0 +1,147 @@
+/* === Layout & Base === */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    font-family: "Lucida Sans", sans-serif;
+    background-color: #f3f3f3;
+    min-height: 100vh;
+}
+
+.menubar {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.menubar h2 {
+    color: #463234;
+    margin-bottom: 10px;
+}
+
+/* === Game Container === */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#mazeCanvas {
+    width: 90vw;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    border: 5px solid #4e6227;
+    border-radius: 10px;
+    background-color: white;
+    touch-action: none;
+}
+
+/* === Controls === */
+#controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+}
+
+#buttonFlex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.buttonRow {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+#buttonFlex button {
+    background-color: #db6334;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#buttonFlex button:hover {
+    background-color: #b92929;
+}
+
+/* === Start Button === */
+.startbtn {
+    background-color: #af4c91;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#difficulty {
+    margin-left: 10px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #888;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: white;
+}
+
+@media (max-width: 480px) {
+    #difficulty {
+        font-size: 0.9rem;
+        padding: 5px 8px;
+    }
+}
+
+.startbtn:hover {
+    background-color: #64035f;
+}
+
+/* === Message Box === */
+.msgbox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 70vw;
+    background-color: #1e90ff;
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    visibility: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+/* === Mobile Adjustments (Samsung A33 size) === */
+@media (max-width: 480px) {
+    #buttonFlex button {
+        width: 54px;
+        height: 54px;
+        font-size: 1.3rem;
+    }
+
+    .menubar h2 {
+        font-size: 1.3rem;
+    }
+
+    .startbtn {
+        font-size: 1rem;
+        padding: 8px 16px;
+    }
+}
